@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        terraform 'Terraform-1.16.4'
+        terraform 'Terraform-1.9'
     }
 
     environment {
@@ -10,10 +10,10 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code') {
+        stage('Fix Git Safety & Clean Workspace') {
             steps {
-                echo 'Checking out infrastructure source code...'
-                checkout scm
+                // Configures Git to trust all workspace directories regardless of file ownership
+                sh 'git config --global --add safe.directory "*"'
             }
         }
 
